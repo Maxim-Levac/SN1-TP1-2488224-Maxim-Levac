@@ -1,3 +1,7 @@
+import random
+import time
+import math
+
 
 def racine_nombre_par_nombre(nombre, decimal):
     """
@@ -44,19 +48,41 @@ def racine_nombre_par_nombre(nombre, decimal):
     return(premier_chiffre)
 
 def racine_dichotomie(chiffre):
+    #S'assurer que l'entrée est un chiffre et positif
+    try:
+        nombre1 = int(chiffre)
+    except ValueError:
+        print("Entrer un chiffre")
+        return None
+    if chiffre < 0:
+        raise ValueError("La racine d'un nombre négatif est impossible, s'il vous plaît insérer un chiffre positif")
+    #vérifier si le chiffre est plus grand ou plus petit que 1
     if chiffre >= 1:
         bas = 0
         haut = chiffre
     if 0 < chiffre < 1:
         bas = chiffre
         haut = 1
+    #début de méthode de dichotomie
     while True:
         milieu  = (bas + haut) / 2
         if milieu ** 2 < chiffre:
             bas = milieu
         if milieu ** 2 > chiffre:
             haut = milieu
-        if haut - bas < (10 ** ):
+        if haut - bas < (0.00001):
             break
-    print((haut + bas)/2)
-racine_dichotomie(8)
+    return((haut + bas)/2)
+
+#calcul de temps
+start = time.time()
+temps = []
+for _ in range(100000):
+    start1 = time.time()
+    racine_nombre_par_nombre(random.randrange(10,10000),14)
+    end1 = time.time()
+    temps.append(end1 - start1)
+
+end = time.time()
+moyenne = sum(temps) / len(temps)
+print(f"Le temps pour compléter les 100 000 calculations est de {end}s et le temps moyen est de {moyenne}")
