@@ -70,19 +70,35 @@ def racine_dichotomie(chiffre):
             bas = milieu
         if milieu ** 2 > chiffre:
             haut = milieu
-        if haut - bas < (0.00001):
+        if haut - bas < (0.001):
             break
     return((haut + bas)/2)
 
 #calcul de temps
-start = time.time()
-temps = []
+start = time.perf_counter()
 for _ in range(100000):
-    start1 = time.time()
-    racine_nombre_par_nombre(random.randrange(10,10000),14)
-    end1 = time.time()
-    temps.append(end1 - start1)
+    racine_nombre_par_nombre(random.uniform(10, 10_00), 5)
 
-end = time.time()
-moyenne = sum(temps) / len(temps)
-print(f"Le temps pour compléter les 100 000 calculations est de {end}s et le temps moyen est de {moyenne}")
+end = time.perf_counter()
+temps_total = (end - start)
+moyenne = temps_total / 100000
+print(f"Le temps pour compléter les 100 000 calculations avec la méthode de chiffre par chiffre est de {temps_total * 1000:.0f}ms et le temps moyen est de {moyenne*1000:.4f}ms")
+
+#calcul de temps
+start = time.perf_counter()
+for _ in range(100000):
+    racine_dichotomie(random.uniform(10, 10_00))
+
+end = time.perf_counter()
+temps_total = (end - start)
+moyenne = temps_total / 100000
+print(f"Le temps pour compléter les 100 000 calculations avec la méthode de dichotomie est de {temps_total * 1000:.0f}ms et le temps moyen est de {moyenne*1000:.4f}ms")
+#calcul de temps
+start = time.perf_counter()
+for _ in range(100000):
+    math.sqrt(random.uniform(10, 10_00))
+
+end = time.perf_counter()
+temps_total = (end - start)
+moyenne = temps_total / 100000
+print(f"Le temps pour compléter les 100 000 calculations avec la méthode de math.sqrt est de {temps_total * 1000:.0f}ms et le temps moyen est de {moyenne*1000:.4f}ms")
