@@ -43,12 +43,12 @@ def racine_nombre_par_nombre(nombre, decimal):
             #vérificer si le chiffre du haut est égale au nombre
             if nouveau_chiffre_haut ** 2 == nombre:
                 premier_chiffre = nouveau_chiffre_haut
+                chiffre_trouver = True
                 break
             # vérifier si les deux chiffres sont entre le vrai chiffre
             if nouveau_chiffre_haut ** 2 >= nombre and nouveau_chiffre_bas ** 2 <= nombre:
                 premier_chiffre = nouveau_chiffre_bas
                 chiffre_trouver = True
-
             else:
                 chiffre += 1
 
@@ -82,6 +82,8 @@ def racine_dichotomie(chiffre):
     elif 0 < chiffre < 1:
         bas = chiffre
         haut = 1
+    else:
+        return 0
     #début de méthode de dichotomie
     while True:
         milieu  = (bas + haut) / 2
@@ -110,7 +112,7 @@ def racine_nombre_par_nombre_n(nombre, decimal, n):
 
     Exemple d'utilisation :
     >>> racine_nombre_par_nombre_n(27, 2, 3)
-    2.9
+    3.0
     """
 
     #S'assurer que l'entrée est un chiffre et positif
@@ -134,6 +136,12 @@ def racine_nombre_par_nombre_n(nombre, decimal, n):
             #Nouveau chiffre haut et bas à tester
             nouveau_chiffre_haut = (premier_chiffre + (chiffre * 10 ** -i))
             nouveau_chiffre_bas = (premier_chiffre + ((chiffre-1) * 10 ** -i))
+            #Vérifier si nouveau chiffre est égale au nombre
+            if nouveau_chiffre_haut ** n == nombre:
+                premier_chiffre = nouveau_chiffre_haut
+                chiffre_trouver = True
+                break
+
 
             #vérifier si les deux chiffres sont entre le vrai chiffre
             if nouveau_chiffre_haut ** n >= nombre and nouveau_chiffre_bas ** n <= nombre:
@@ -158,7 +166,7 @@ def racine_dichotomie_n(chiffre, n):
 
     Exemple d'utilisation :
     >>> racine_dichotomie_n(27,3)
-    2.9996795654296875
+    3.0
     """
     #S'assurer que l'entrée est un chiffre et positif
     try:
@@ -177,16 +185,21 @@ def racine_dichotomie_n(chiffre, n):
         haut = 1
     #début de méthode de dichotomie
     while True:
-        milieu  = (bas + haut) / 2
+
+        milieu = (bas + haut) / 2
+
+        #vérifier si milieu est égale au chiffre
+        if milieu ** 2 == chiffre:
+            return round(milieu,6)
         if milieu ** n < chiffre:
             bas = milieu
         elif milieu ** n > chiffre:
             haut = milieu
         else:
-            return milieu
-        if haut - bas < (0.001):
+            return round(milieu,6)
+        if haut - bas < (0.00000001):
             break
-    return((haut + bas)/2)
+    return round(((haut + bas)/2), 6)
 
 
 #calcul de temps nombre par nombre
